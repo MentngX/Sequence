@@ -1,8 +1,10 @@
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <fstream>
 #include "Sequence.h"
 #include <cstring>
+#define MAXCHAR 1500000
 using namespace std;
 
 Sequence::Sequence(string filename){
@@ -14,7 +16,7 @@ Sequence::Sequence(string filename){
     input.open(a);
     if(!input.is_open()){
       cout << "Could not find the file\n";
-      }
+      }    
     while ( getline( input , temp) ) {
       dna += temp;}
     len = dna.length();
@@ -56,9 +58,38 @@ string Sequence::longestConsecutive(){
     return result;
 }
 
-string Sequence::longestRepeated(){
 
-
+int pstrcmp(const void *p1 , const void *p2 ){
+    return strcmp ( *(char* const *)p1, *(char* const*)p2 );
 }
+
+int count ( char *a, char *b){
+    int i = 0;
+    while ( *a && (*a++ == *b++) )i++;
+    return i;
+}
+
+
+string Sequence::longestRepeated(){
+    char* a = new char[MAXCHAR];
+    char* *b = new char*[MAXCHAR];
+    strcpy(a,dna.c_str());
+    for ( int i = 0; i < len ; i++){b[i] = &a[i];}
+    int temp;
+    int maxlen=0, maxi=0;
+    qsort( b , len , sizeof(char*), pstrcmp);
+    for ( int i = 0; i < len - 1; i++){
+      temp = count ( b[i] , b[i+1] ) ;
+      if(temp > maxlen ){
+        maxlen = temp;
+        maxi = i;}}
+    string s = b[maxi];
+    string result;
+    for ( int i = 0 ; i< maxlen ; i++){
+    result += s[i];
+}
+    delete []a;
+    delete []b;
+    return result;}
     
      

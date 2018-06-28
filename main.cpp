@@ -13,6 +13,6 @@ int main(){
     cout << "G:"  << dna.numberOf('G') << endl;
     cout << "T:" << dna.numberOf('T') << endl;
     cout << dna.longestConsecutive() << endl;
-    
+    cout << dna.longestRepeated() << endl;
     return 0;
 }
